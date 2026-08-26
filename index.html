@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catarata: Informação, Saúde Ocular e Teste Visual Interativo</title>
+    <style>
+        /* CSS Integrado - Design Acessível e Responsivo em Tons de Azul Suaves */
+        :root {
+            --cor-fundo: #f4f8fb;
+            --cor-card: #ffffff;
+            --azul-escuro: #10375c;
+            --azul-medio: #1d6a96;
+            --azul-suave: #4a90e2;
+            --azul-claro: #e8f1f5;
+            --azul-destaque: #d0e8f2;
+            --texto-principal: #1a2530;
+            --texto-suave: #3a4b5c;
+            --sombra: 0 4px 15px rgba(16, 55, 92, 0.08);
+            --borda-raio: 12px;
+            --fonte-tamanho: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--cor-fundo);
+            color: var(--texto-principal);
+            font-size: var(--fonte-tamanho);
+            line-height: 1.7;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Barra de Acessibilidade Superior */
+        .barra-acessibilidade {
+            background-color: var(--azul-escuro);
+            color: #ffffff;
+            padding: 10px 20px;
+            text-align: right;
+            font-size: 0.95rem;
+        }
+
+        .btn-tamanho {
+            background-color: var(--azul-medio);
+            color: white;
+            border: 1px solid white;
+            padding: 4px 10px;
+            margin-left: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-tamanho:hover {
+            background-color: var(--azul-suave);
+        }
+
+        /* Cabeçalho */
+        header {
+            background: linear-gradient(135deg, var(--azul-escuro), var(--azul-medio));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: var(--sombra);
+        }
+
+        header h1 {
+            font-size: 2.4rem;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: var(--azul-claro);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Navegação */
+        nav {
+            background-color: var(--azul-medio);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        nav a:hover, nav a:focus {
+            background-color: var(--azul-escuro);
+            outline: 2px solid white;
+        }
+
+        /* Layout Principal */
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        section {
+            background: var(--cor-card);
+            border-radius: var(--borda-raio);
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--sombra);
+            border-left: 6px solid var(--azul-suave);
+        }
+
+        h2 {
+            color: var(--azul-escuro);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--azul-claro);
+            padding-bottom: 8px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: var(--texto-suave);
+        }
+
+        ul {
+            margin-left: 25px;
+            margin-bottom: 15px;
+            color: var(--texto-suave);
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* Imagens / Diagramas */
+        .container-imagem {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: var(--azul-claro);
+            border-radius: 8px;
+        }
+
+        .container-imagem img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+        }
+
+        .legenda-imagem {
+            font-size: 0.9rem;
+            color: var(--azul-escuro);
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        /* Grid de Informações */
+        .grid-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card-info {
+            background-color: var(--azul-claro);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #d0e0ed;
+        }
+
+        .card-info h3 {
+            color: var(--azul-escuro);
+            margin-bottom: 10px;
+        }
+
+        /* --- ESTILOS DO SIMULADOR DE EMBAÇAMENTO --- */
+        .simulador-container {
+            background: #eef6fc;
+            border: 2px dashed var(--azul-suave);
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .controles-simulador {
+            margin-bottom: 20px;
+        }
+
+        .controles-simulador label {
+            font-weight: bold;
+            color: var(--azul-escuro);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .slider-embacamento {
+            width: 80%;
+            max-width: 400px;
+            accent-color: var(--azul-medio);
+            height: 8px;
+            cursor: pointer;
+        }
+
+        .palco-simulacao {
+            background: #ffffff;
+            border: 2px solid var(--azul-medio);
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+
+        .alvo-simulacao {
+            transition: filter 0.1s ease;
+            max-width: 100%;
+        }
+
+        .alvo-texto {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #111;
+            margin-bottom: 10px;
+        }
+
+        /* --- ESTILOS DO TESTE VISUAL INTERATIVO --- */
+        .area-teste-visual {
+            background-color: #f0f7fc;
+            border: 2px solid var(--azul-suave);
+            border-radius: var(--borda-raio);
+            padding: 25px;
+        }
+
+        .painel-etapa {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .painel-etapa h3 {
+            color: var(--azul-escuro);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tag-etapa {
+            background-color: var(--azul-medio);
+            color: white;
+            font-size: 0.85rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+
+        /* Sub-teste 1: Tabela de Nitidez Visiva */
+        .tabela-snellen-simulada {
+            background: white;
+            border: 2px solid var(--azul-medio);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            font-family: monospace;
+            font-weight: bold;
+            margin: 15px 0;
+            user-select: none;
+        }
+
+        .linha-snellen-1 { font-size: 2.2rem; color: #111; letter-spacing: 12px; }
+        .linha-snellen-2 { font-size: 1.6rem; color: #333; letter-spacing: 8px; }
+        .linha-snellen-3 { font-size: 1.1rem; color: #666; letter-spacing: 5px; }
+        .linha-snellen-4 { font-size: 0.8rem; color: #888; letter-spacing: 3px; }
+
+        .opcoes-teste {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .opcoes-teste label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            background: var(--azul-claro);
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+
+        .opcoes-teste label:hover {
+            background: var(--azul-destaque);
+        }
+
+        .opcoes-teste input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--azul-medio);
+        }
+
+        /* Botão e Resultado */
+        .btn-resultado {
+            display: inline-block;
+            background-color: var(--azul-escuro);
+            color: white;
+            padding: 14px 28px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            margin-top: 15px;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .btn-resultado:hover {
+            background-color: var(--azul-medio);
+        }
+
+        .aviso-medico {
+            background-color: #eaf4fb;
+            border-left: 5px solid var(--azul-escuro);
+            padding: 20px;
+            margin-top: 25px;
+            border-radius: 6px;
+        }
+
+        /* Rodapé */
+        footer {
+            background-color: var(--azul-escuro);
+            color: white;
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 40px;
+            font-size: 0.95rem;
+        }
+
+        footer p {
+            color: var(--azul-claro);
+            margin-bottom: 5px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            .container {
+                padding: 0 12px;
+            }
+            section {
+                padding: 20px;
+            }
+            .linha-snellen-1 { font-size: 1.6rem; }
+            .linha-snellen-2 { font-size: 1.2rem; }
+            .linha-snellen-3 { font-size: 0.9rem; }
+            .linha-snellen-4 { font-size: 0.7rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Barra de Controles de Acessibilidade -->
+    <div class="barra-acessibilidade">
+        <span>Tamanho do Texto: </span>
+        <button class="btn-tamanho" onclick="alterarFonte(1)" title="Aumentar texto">A+</button>
+        <button class="btn-tamanho" onclick="alterarFonte(-1)" title="Diminuir texto">A-</button>
+    </div>
+
+    <!-- Cabeçalho Principal -->
+    <header>
+        <h1>Saúde Ocular: Entendendo a Catarata</h1>
+        <p>Informações científicas claras, acessíveis e orientações para cuidar melhor da sua visão.</p>
+    </header>
+
+    <!-- Menu de Navegação -->
+    <nav aria-label="Menu principal">
+        <a href="#o-que-e">O que é</a>
+        <a href="#simulador">Simulador de Embaçamento</a>
+        <a href="#fisica-biologia">Física e Biologia</a>
+        <a href="#tratamento">Tratamento</a>
+        <a href="#teste-visual">Teste Visual Interativo</a>
+        <a href="#fontes">Fontes</a>
+    </nav>
+
+    <div class="container">
+
+        <!-- Seção 1: O que é a Catarata -->
+        <section id="o-que-e">
+            <h2>1. Descrição da Doença</h2>
+            <p>A <strong>catarata</strong> é uma alteração ocular caracterizada pela perda de transparência do <em>cristalino</em> — a lente natural do nosso olho. Com o envelhecimento ou devido a outros fatores de saúde, as proteínas dessa lente podem se aglomerar, deixando a visão turva ou embaçada.</p>
+            
+            <div class="grid-info">
+                <div class="card-info">
+                    <h3>Sintomas Principais</h3>
+                    <ul>
+                        <li>Visão nublada ou amarelada.</li>
+                        <li>Sensibilidade aumentada à luz (fotofobia).</li>
+                        <li>Dificuldade para enxergar à noite.</li>
+                        <li>Percepção de halos ao redor de luzes.</li>
+                    </ul>
+                </div>
+                <div class="card-info">
+                    <h3>Impacto no Dia a Dia</h3>
+                    <p>Atividades comuns como ler livros, reconhecer rostos de parentes, fazer trabalhos manuais ou dirigir à noite tornam-se progressivamente mais difíceis, exigindo atenção médica.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Interativa: Simulador de Embaçamento -->
+        <section id="simulador">
+            <h2>Demonstração: Simulador de Embaçamento Visual</h2>
+            <p>Como a catarata afeta a refração e o espalhamento da luz, a imagem perde o foco preciso e adquire um tom levemente amarelado. Mova o controle deslizante abaixo para simular a progressão do embaçamento em um olho afetado por catarata:</p>
+
+            <div class="simulador-container">
+                <div class="controles-simulador">
+                    <label for="nivel-embacamento">Grau de Opacificação do Cristalino: <span id="valor-embacamento">0%</span></label>
+                    <input type="range" id="nivel-embacamento" class="slider-embacamento" min="0" max="100" value="0" oninput="atualizarSimulacao(this.value)">
+                </div>
+
+                <div class="palco-simulacao">
+                    <div id="alvo-efeito" class="alvo-simulacao">
+                        <div class="alvo-texto">E O F L C T P</div>
+                        <p style="margin: 0; font-size: 1.1rem; color: #333;">Exemplo de leitura diária: O cristalino transparente foca a luz na retina.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 2 e 3: Física e Anatomia -->
+        <section id="fisica-biologia">
+            <h2>2 e 3. A Física e a Biologia por trás do Problema</h2>
+            
+            <p>Para entender a catarata, precisamos olhar para como o olho funciona como um sistema óptico:</p>
+
+            <div class="container-imagem">
+                <img src="https://via.placeholder.com/600x300/1d6a96/ffffff?text=Estrutura+do+Olho+Humano+-+Cristalino+e+Retina" alt="Diagrama da anatomia do olho humano mostrando a localização do cristalino atrás da íris e a retina ao fundo">
+                <div class="legenda-imagem">[Image of human eye structure showing lens and retina]</div>
+            </div>
+
+            <div class="grid-info">
+                <div class="card-info">
+                    <h3>A Física do Olho com Catarata</h3>
+                    <p>Em um olho saudável, a luz passa pelo cristalino transparente e sofre **refração**, focando com precisão na retina. Na catarata, a opacidade causa a **dispersão e espalhamento da luz**. A imagem ainda tenta se formar na retina, mas chega **enfraquecida, borrada e sem nitidez**.</p>
+                </div>
+                <div class="card-info">
+                    <h3>A Biologia Estrutural</h3>
+                    <p>A estrutura afetada é o <strong>cristalino</strong>. Ele é formado por água e proteínas denominadas <em>cristalinas</em>. O estresse oxidativo ou o envelhecimento alteram a organização dessas proteínas, criando agregados opacos. Os fotorreceptores (cones e bastonetes) na retina continuam saudáveis.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 4: Tratamento e Correção -->
+        <section id="tratamento">
+            <h2>4. Formas de Correção e Tratamento</h2>
+            <p>É importante destacar que a catarata <strong>não é corrigida com óculos de grau, colírios ou exercícios visuais</strong>. A única solução definitiva é o procedimento cirúrgico.</p>
+            
+            <div class="card-info" style="margin-top: 15px;">
+                <h3>O Princípio Físico da Cirurgia (Facoemulsificação)</h3>
+                <p><strong>1. Remoção:</strong> O cristalino opaco é fragmentado com ondas de ultrassom e aspirado pelo cirurgião.</p>
+                <p><strong>2. Substituição Óptica:</strong> Uma <strong>Lente Intraocular (LIO)</strong> artificial e transparente é implantada no lugar.</p>
+                <p><strong>Princípio Físico:</strong> O procedimento substitui um meio óptico turvo e irregular por um meio cristalino sintético com índice de refração adequado. Isso permite que os raios de luz voltem a ser refratados perfeitamente em direção à retina, restaurando o foco e a nitidez.</p>
+            </div>
+        </section>
+
+        <!-- Seção do Teste Visual Interativo -->
+        <section id="teste-visual">
+            <h2>Teste Visual Interativo de Triagem</h2>
+            <p>Este teste avalia como seus olhos percebem texto e formas sob diferentes condições de nitidez e contraste. Cubra um olho de cada vez a uma distância confortável da tela (cerca de 50 cm).</p>
+
+            <form class="area-teste-visual" onsubmit="event.preventDefault(); calcularResultadoTeste();">
+                
+                <!-- Etapa 1 -->
+                <div class="painel-etapa">
+                    <h3><span class="tag-etapa">Etapa 1</span> Teste de Nitidez de Letras</h3>
+                    <p>Observe as letras abaixo na tabela simplificada:</p>
+                    
+                    <div class="tabela-snellen-simulada">
+                        <div class="linha-snellen-1">E</div>
+                        <div class="linha-snellen-2">F P</div>
+                        <div class="linha-snellen-3">T O Z</div>
+                        <div class="linha-snellen-4">L P E D</div>
+                    </div>
+
+                    <div class="opcoes-teste">
+                        <label><input type="radio" name="t1" value="0" required> Consigo ler perfeitamente todas as linhas até a menor.</label>
+                        <label><input type="radio" name="t1" value="1"> As linhas menores parecem borradas ou duplas.</label>
+                        <label><input type="radio" name="t1" value="2"> Tenho dificuldade para distinguir até as letras maiores.</label>
+                    </div>
+                </div>
+
+                <!-- Etapa 2 -->
+                <div class="painel-etapa">
+                    <h3><span class="tag-etapa">Etapa 2</span> Percepção de Embaçamento e Névoa</h3>
+                    <p>Quando você olha para objetos iluminados ou lê textos no seu celular ou computador no dia a dia:</p>
+
+                    <div class="opcoes-teste">
+                        <label><input type="radio" name="t2" value="0" required> A imagem é nítida e limpa.</label>
+                        <label><input type="radio" name="t2" value="1"> Parece haver uma leve névoa ou fumaça constante na visão.</label>
+                        <label><input type="radio" name="t2" value="2"> Sinto que as cores estão desbotadas ou com tom amarelado.</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-resultado">Calcular Resultado da Triagem</button>
+            </form>
+
+            <div id="resultado-container" class="aviso-medico" style="display: none;">
+                <h3 id="resultado-titulo" style="color: var(--azul-escuro);"></h3>
+                <p id="resultado-texto"></p>
+            </div>
+        </section>
+
+        <!-- Fontes e Referências -->
+        <section id="fontes">
+            <h2>Fontes e Fontes de Pesquisa Consultadas</h2>
+            <ul>
+                <li><strong>Brasil Escola (UOL):</strong> Artigos educativos sobre óptica geométrica e defeitos da visão humana.</li>
+                <li><strong>Toda Matéria:</strong> Seção de Física e Biologia (Refração da luz e estrutura do olho humano).</li>
+                <li><strong>Conselho Brasileiro de Oftalmologia (CBO):</strong> Diretrizes e cartilhas para saúde ocular comunitária.</li>
+                <li><strong>Organização Mundial da Saúde (OMS):</strong> Dados globais sobre saúde visual e prevenção da cegueira reversível.</li>
+            </ul>
+        </section>
+
+    </div>
+
+    <!-- Rodapé -->
+    <footer>
+        <p><strong>Portal de Conscientização sobre a Catarata</strong></p>
+        <p>Conteúdo educativo elaborado para fins de estudo e informação pública.</p>
+        <p>Lembre-se: Consulte regularmente um médico Oftalmologista.</p>
+    </footer>
+
+    <!-- Script para Acessibilidade, Simulador e Testes -->
+    <script>
+        // Alteração de fonte (Acessibilidade)
+        let tamanhoAtual = 18;
+        function alterarFonte(delta) {
+            tamanhoAtual += delta;
+            if (tamanhoAtual < 14) tamanhoAtual = 14;
+            if (tamanhoAtual > 26) tamanhoAtual = 26;
+            document.documentElement.style.setProperty('--fonte-tamanho', tamanhoAtual + 'px');
+        }
+
+        // Simulador em Tempo Real de Embaçamento
+        function atualizarSimulacao(valor) {
+            document.getElementById('valor-embacamento').innerText = valor + '%';
+            const alvo = document.getElementById('alvo-efeito');
+            
+            // Aplica filtro CSS de desfoque (blur), sepia (amarelado) e redução de contraste
+            const blurPixels = (valor / 100) * 6; // até 6px de blur
+            const sepiaPercent = (valor / 100) * 40; // até 40% de amarelado
+            const contrastPercent = 100 - ((valor / 100) * 35); // reduz contraste em até 35%
+            
+            alvo.style.filter = `blur(${blurPixels}px) sepia(${sepiaPercent}%) contrast(${contrastPercent}%)`;
+        }
+
+        // Cálculo do Resultado do Teste Visual
+        function calcularResultadoTeste() {
+            const t1 = parseInt(document.querySelector('input[name="t1"]:checked').value);
+            const t2 = parseInt(document.querySelector('input[name="t2"]:checked').value);
+            
+            const pontuacaoTotal = t1 + t2;
+
+            const container = document.getElementById('resultado-container');
+            const titulo = document.getElementById('resultado-titulo');
+            const texto = document.getElementById('resultado-texto');
+
+            container.style.display = 'block';
+
+            if (pontuacaoTotal >= 2) {
+                titulo.innerText = "Atenção: Indicadores de Alteração Visual Identificados";
+                texto.innerHTML = "Seus relatos indicam perceptível perda de nitidez ou presença de embaçamento/névoa na visão. Essa alteração na transparência é um sintoma característico da catarata. Recomendamos agendar uma avaliação com um médico <strong>Oftalmologista</strong>.";
+            } else if (pontuacaoTotal === 1) {
+                titulo.innerText = "Leve Alteração Detectada";
+                texto.innerHTML = "Você relatou pequena perda de nitidez. Mantenha seus exames oftalmológicos de rotina em dia para acompanhar a saúde do seu cristalino.";
+            } else {
+                titulo.innerText = "Visão com Boa Nitidez";
+                texto.innerHTML = "Não foram identificados sintomas significativos de embaçamento neste teste simples. Continue cuidando da sua saúde ocular com consultas periódicas.";
+            }
+
+            container.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
